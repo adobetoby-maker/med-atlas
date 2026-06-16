@@ -6,14 +6,19 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID
 
+const BASE_URL = 'https://medterms.worker-bee.app'
+
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: 'Med Atlas — 3D Medical Terminology',
   description: 'Master 1,200+ medical terms for MA, CMA, and CPC certification with immersive 3D anatomical flashcards and gamified quizzes.',
   keywords: ['medical terminology', 'flashcards', 'CMA exam prep', 'MA certification', 'medical assistant', 'CPC exam'],
+  alternates: { canonical: BASE_URL },
   openGraph: {
     title: 'Med Atlas — 3D Medical Terminology',
     description: '1,200+ medical terms with 3D anatomy. Study for MA, CMA, CPC exams.',
     type: 'website',
+    url: BASE_URL,
   },
 }
 

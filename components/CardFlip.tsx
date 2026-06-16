@@ -60,9 +60,10 @@ export function CardFlip({ term, onFlip }: Props) {
 
   return (
     <group>
-      <pointLight ref={lightRef} color={accent} intensity={hovered ? 1.5 : 0.6} distance={6} position={[1, 2, 2]} />
-      <ambientLight intensity={0.35} />
-      <directionalLight position={[3, 5, 3]} intensity={0.8} castShadow />
+      <pointLight ref={lightRef} color={accent} intensity={hovered ? 2.0 : 0.8} distance={7} position={[1, 2, 2]} />
+      <pointLight color="#ffffff" intensity={0.5} distance={5} position={[-2, -1, 2]} />
+      <ambientLight intensity={0.45} />
+      <directionalLight position={[3, 5, 3]} intensity={0.7} />
 
       <animated.group
         rotation-y={rotation}
@@ -94,7 +95,6 @@ export function CardFlip({ term, onFlip }: Props) {
             color={accent}
             anchorX="center"
             anchorY="middle"
-            font="/fonts/Inter-SemiBold.ttf"
           >
             {(catConfig?.emoji ?? '⚕️') + ' ' + term.category.toUpperCase()}
           </Text>
@@ -108,7 +108,7 @@ export function CardFlip({ term, onFlip }: Props) {
             textAlign="center"
             anchorX="center"
             anchorY="middle"
-            font="/fonts/Inter-Bold.ttf"
+            font="/fonts/Inter-Bold.woff"
           >
             {term.term}
           </Text>
@@ -212,7 +212,7 @@ export function CardFlip({ term, onFlip }: Props) {
           </Text>
 
           {/* Term name reminder */}
-          <Text position={[0, -2.2, 0.1]} fontSize={0.18} color="#f0f4ff" anchorX="center" anchorY="bottom" fontWeight={700}>
+          <Text position={[0, -2.2, 0.1]} fontSize={0.18} color="#f0f4ff" anchorX="center" anchorY="bottom" font="/fonts/Inter-Bold.woff">
             {term.term}
           </Text>
         </group>

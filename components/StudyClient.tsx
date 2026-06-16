@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { StudyScene } from './StudyScene'
 import { TERMS, CATEGORIES } from '../data/terms'
@@ -8,7 +9,10 @@ import { TERMS, CATEGORIES } from '../data/terms'
 const ALL_CATS = Object.keys(CATEGORIES)
 
 export default function StudyClient() {
-  const [activeCategory, setActiveCategory] = useState<string | undefined>(undefined)
+  const searchParams = useSearchParams()
+  const urlCat = searchParams.get('cat') ?? undefined
+  const validUrlCat = urlCat && CATEGORIES[urlCat] ? urlCat : undefined
+  const [activeCategory, setActiveCategory] = useState<string | undefined>(validUrlCat)
 
   const filteredTerms = useMemo(() => {
     if (!activeCategory) return TERMS
@@ -20,7 +24,8 @@ export default function StudyClient() {
       {/* Nav */}
       <nav className="flex items-center justify-between px-5 py-3 border-b border-white/5 shrink-0">
         <Link href="/" className="flex items-center gap-2">
-          <span className="text-lg font-black text-[#4fffb0]">Med Atlas</span>
+          <span className="text-lg font-black text-[#e05c5c]">Med</span>
+          <span className="text-lg font-black text-white">Atlas</span>
         </Link>
         <div className="text-xs text-white/30">{filteredTerms.length} terms</div>
       </nav>

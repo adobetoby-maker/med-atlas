@@ -2,7 +2,7 @@
 
 import { Suspense, useState, useEffect, useCallback } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls, Environment, Stars } from '@react-three/drei'
+import { OrbitControls, Stars } from '@react-three/drei'
 import { CardFlip } from './CardFlip'
 import type { MedTerm } from '../data/terms'
 import { CATEGORIES } from '../data/terms'
@@ -147,16 +147,22 @@ export function StudyScene({ terms, filterCategory }: Props) {
       </div>
 
       {/* Canvas — the 3D card */}
-      <div className="relative flex-1 rounded-2xl overflow-hidden" style={{ minHeight: 480 }}>
+      <div className="relative flex-1 rounded-2xl overflow-hidden" style={{ minHeight: 480, background: '#080c14' }}>
         <Canvas
           camera={{ position: [0, 0, 7], fov: 42 }}
-          gl={{ antialias: true, alpha: true }}
-          shadows
+          gl={{ antialias: true, powerPreference: 'default', failIfMajorPerformanceCaveat: false }}
+          style={{ background: '#080c14' }}
+          onCreated={({ gl }) => {
+            gl.setClearColor('#080c14', 1)
+            const canvas = gl.domElement
+            canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault() }, false)
+          }}
         >
           <color attach="background" args={['#080c14']} />
           <fog attach="fog" args={['#080c14', 10, 22]} />
           <Stars radius={80} depth={40} count={800} factor={3} fade speed={0.4} />
-          <Environment preset="night" />
+          <ambientLight intensity={0.25} />
+          <directionalLight position={[5, 8, 5]} intensity={0.6} />
           <Suspense fallback={null}>
             <CardFlip
               key={currentTerm.id}

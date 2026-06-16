@@ -106,6 +106,13 @@ GA_PROPERTY_ID        # numeric property ID (Data API, server-only)
 - `() => JSX.Element` as geometry return type → TS error "Cannot find namespace JSX" → use `() => ReactNode`
 - `<ellipse>` in R3F → treated as SVG element, not Three.js geometry — remove it
 - `npm run dev` without `-H 0.0.0.0` → Tailscale preview breaks silently
+- `<Environment preset="night">` in Canvas → loads HDR texture → exhausts headless GPU sandbox → context lost → white canvas; removed in favor of explicit lights
+- `font="/fonts/Inter-Bold.woff2"` in drei `<Text>` → troika-three-text doesn't support WOFF2 → Suspense fires → entire card disappears; use WOFF1 from `@fontsource/inter`
+- `font="/fonts/SomeMissing.ttf"` (404) in drei `<Text>` → same Suspense blank as above; always verify file exists in `public/fonts/`
+- `shadows` + PCFSoftShadowMap on Canvas → deprecated in Three.js 0.170+ and adds GPU overhead; removed
+- `useState(undefined)` for category in StudyClient → `?cat=` URL param silently ignored; fix with `useSearchParams().get('cat')` initialized into state
+- Cone color mismatch with sphere lobes → visible dark seam at junction; fix with a bridge sphere matching intermediate tone + narrowing cone base radius
+- Three.js primitive color discontinuity: adjacent meshes with different `emissiveIntensity` show hard seam — always add a transition mesh between contrasting pieces
 
 ## Pending
 
